@@ -21,6 +21,12 @@ const TextBox = () => {
         placeholder="Images"
         className="textarea textarea-bordered textarea-lg w-full max-w-xs"
       ></textarea>
+      <div className="flex justify-end w-full max-w-xs">
+      <button className="btn">
+        <span className="loading loading-spinner"></span>
+        Submit
+      </button>
+      </div>
     </div>
   );
 };
