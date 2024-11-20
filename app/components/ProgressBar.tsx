@@ -7,7 +7,6 @@ const ProgressBar = () => {
       <li className="step">Add Content</li>
       <li className="step">Choose Images</li>
       <li className="step">Finish</li>
-      
     </ul>
   );
 };
