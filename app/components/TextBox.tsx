@@ -1,7 +1,16 @@
-import React from "react";
+'use client'
+
+import React, {useState} from "react";
 import ProgressBar from "./ProgressBar";
 
 const TextBox = () => {
+
+  const [keyPhrase, setKeyPhrase] = useState("");
+
+  const handleKeyPhraseChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setKeyPhrase(event.target.value);
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
       <div className = "mb-5">
@@ -10,6 +19,8 @@ const TextBox = () => {
       <textarea
         placeholder="Key Phrase"
         className="textarea textarea-bordered textarea-xs w-full max-w-xs"
+        value={keyPhrase}
+        onChange={handleKeyPhraseChange}
       ></textarea>
 
       <textarea
