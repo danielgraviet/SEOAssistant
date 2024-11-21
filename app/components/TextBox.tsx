@@ -1,8 +1,12 @@
 import React from "react";
+import ProgressBar from "./ProgressBar";
 
 const TextBox = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
+      <div className = "mb-5">
+        <ProgressBar></ProgressBar>
+      </div>
       <textarea
         placeholder="Key Phrase"
         className="textarea textarea-bordered textarea-xs w-full max-w-xs"
