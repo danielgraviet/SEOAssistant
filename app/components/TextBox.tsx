@@ -2,6 +2,7 @@
 
 import React, {useState} from "react";
 import ProgressBar from "./ProgressBar";
+import { SubmitButton } from "./SubmitButton";
 
 const TextBox = () => {
 
@@ -10,6 +11,10 @@ const TextBox = () => {
   const handleKeyPhraseChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setKeyPhrase(event.target.value);
   }
+
+  const handleSubmit = () => {
+    console.log('Submitted Key Phrase:', keyPhrase);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
@@ -37,10 +42,7 @@ const TextBox = () => {
         className="textarea textarea-bordered textarea-lg w-full max-w-xs"
       ></textarea>
       <div className="flex justify-end w-full max-w-xs">
-      <button className="btn">
-        <span className="loading loading-spinner"></span>
-        Submit
-      </button>
+      <SubmitButton onSubmit={handleSubmit}></SubmitButton>
       </div>
     </div>
   );
