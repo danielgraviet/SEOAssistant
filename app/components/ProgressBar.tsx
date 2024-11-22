@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
-const ProgressBar = () => {
+const ProgressBar = ({currentStep}:{currentStep: number}) => {
   return (
     <ul className="steps">
-      <li className="step step-primary">Add Key Phrase</li>
-      <li className="step step-primary">Generate Meta Description</li>
-      <li className="step">Generate Blog Content</li>
-      <li className="step">Generate Image Ideas</li>
-      <li className="step">Refine</li>
+      <li className={`step ${currentStep >= 1 ? "step-primary" : ""}`}>Add Key Phrase</li>
+      <li className={`step ${currentStep >= 2 ? "step-primary" : ""}`}>Generate Meta Description</li>
+      <li className={`step ${currentStep >= 3 ? "step-primary" : ""}`}>Generate Blog Content</li>
+      <li className={`step ${currentStep >= 4 ? "step-primary" : ""}`}>Generate Image Ideas</li>
+      <li className={`step ${currentStep >= 5 ? "step-primary" : ""}`}>Refine</li>
     </ul>
   );
 };
