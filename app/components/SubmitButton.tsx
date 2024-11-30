@@ -19,7 +19,7 @@ export const SubmitButton = ({onSubmit}: {onSubmit: () => void }) => {
 
 
     <div>
-      <button className="btn" onClick={handleSubmit} disabled={isLoading}>
+      <button className="btn btn-accent btn-lg px-8 py-4 text-lg rounded-lg" onClick={handleSubmit} disabled={isLoading}>
       {isLoading ? (
           <span className="loading loading-spinner"></span>
         ) : (
