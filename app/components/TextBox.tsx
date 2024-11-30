@@ -8,6 +8,7 @@ import generateContent from "../server/generateContent";
 const TextBox = () => {
 
   const [keyPhrase, setKeyPhrase] = useState("");
+  const [existingContent, setExistingContent] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
@@ -19,6 +20,10 @@ const TextBox = () => {
     if (event.target.value.trim() !== "") {
       setCurrentStep(2);
     }
+  }
+
+  const handleExistingContentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setExistingContent(event.target.value);
   }
 
   const handleSubmit = async () => {
@@ -43,9 +48,11 @@ const TextBox = () => {
     setImage(generatedImage);
 
     console.log('Submitted Key Phrase:', keyPhrase);
+    console.log('Pre-Existing Content:', existingContent);
     console.log('Generated Meta Description:', generatedMetaDescription);
     console.log('Generated Content:', generatedContent);
     console.log('Generated Image:', generatedImage);
+
 
     try {
       setLoading(true);
@@ -75,6 +82,14 @@ const TextBox = () => {
         value={keyPhrase}
         onChange={handleKeyPhraseChange}
       ></textarea>
+
+      <textarea
+      placeholder="Pre-Existing Content"
+      className="textarea textarea-bordered textarea-xs w-full max-w-xs"
+      value={existingContent}
+      onChange={handleExistingContentChange}
+      >
+      </textarea>
 
       <textarea
         placeholder="Meta Description"
