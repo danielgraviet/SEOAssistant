@@ -1,29 +1,33 @@
 'use client'
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-export const SubmitButton = ({onSubmit}: {onSubmit: () => void }) => {
+export const SubmitButton = ({ onSubmit }: { onSubmit: () => void }) => {
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [isLoading, setIsLoading] =  useState(false);
-
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsLoading(true);
-    onSubmit();
-  
+    console.log("Loaded API Key:", process.env.OPENAI_API_KEY); // Debugging API key loading
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 2000);
-  }
+    try {
+      await onSubmit(); // Ensure `onSubmit` handles async logic properly
+    } catch (error) {
+      console.error("Error during submission:", error);
+    } finally {
+      setIsLoading(false); // Reset loading state
+    }
+  };
 
   return (
-
-
     <div>
-      <button className="btn btn-accent btn-lg px-8 py-4 text-lg rounded-lg" onClick={handleSubmit} disabled={isLoading}>
-      {isLoading ? (
+      <button
+        className="btn btn-accent btn-lg px-8 py-4 text-lg rounded-lg"
+        onClick={handleSubmit}
+        disabled={isLoading}
+      >
+        {isLoading ? (
           <span className="loading loading-spinner"></span>
         ) : (
-          'Submit'
+          "Submit"
         )}
       </button>
     </div>

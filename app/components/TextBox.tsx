@@ -30,36 +30,22 @@ const TextBox = () => {
   };
 
   const handleSubmit = async () => {
-    if (currentStep < 3) {
-      setCurrentStep(3); // Progress to generating blog content
-    }
-
-    const generatedMetaDescription = `This is a great article about ${keyPhrase}. It provides insights and useful information to help you understand more about ${keyPhrase}.`;
-
-    if (currentStep < 4) {
-      setCurrentStep(4); // Simulate moving to image generation step
-    }
-
-    const generatedContent = `This content is about ${keyPhrase}. Conclusion: Protect Your Rights After a Dog Bite A dog bite can have serious consequences, both physically and emotionally. Understanding your rights and knowing what steps to take can make a big difference in the outcome of your claim. If you have questions or want to pursue a claim, consulting an experienced dog bite attorney can help ensure you receive fair compensation for your injuries. If you’ve been bitten by a dog in Utah, contact personal injury attorney Jacob S. Gunter at (801) 373-6345 for a free consultation. He’ll review your case, explain your options, and advocate for your rights.`;
-
-    const generatedImage = `Here are some image ideas: ${keyPhrase}`;
-
-    setMetaDescription(generatedMetaDescription);
-    setContent(generatedContent);
-    setImage(generatedImage);
-
-    console.log("Submitted Key Phrase:", keyPhrase);
-    console.log("Pre-Existing Content:", existingContent);
-    console.log("Generated Meta Description:", generatedMetaDescription);
-    console.log("Generated Content:", generatedContent);
-    console.log("Generated Image:", generatedImage);
-
     try {
       setLoading(true);
+
+      // Call the generateContent function to get API response
       const generatedData = await generateContent(keyPhrase);
-      setMetaDescription(generatedData.metaDescription);
-      setContent(generatedData.content);
-      setImage(generatedData.imageIdeas);
+
+      // Populate the text boxes with API response data
+      setMetaDescription(
+        generatedData.metaDescription || "Meta description not available."
+      );
+      setContent(generatedData.content || "Content not available.");
+      setImage(
+        generatedData.imageIdeas
+          ? generatedData.imageIdeas.join("\n") // Format image ideas into a readable list
+          : "No image ideas available."
+      );
 
       setCurrentStep(5); // Move to the "Refine" step
     } catch (error) {
