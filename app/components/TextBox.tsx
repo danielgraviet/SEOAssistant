@@ -61,40 +61,55 @@ const TextBox = () => {
         <ProgressBar currentStep={currentStep}></ProgressBar>
       </div>
       <div className="grid grid-cols-2 gap-4 w-full max-w-4xl">
-        <textarea
-          placeholder="Type Your Key Phrase Here & Click Submit"
-          className="textarea textarea-bordered textarea-lg w-full h-28"
-          value={keyPhrase}
-          onChange={handleKeyPhraseChange}
-        ></textarea>
+        <div className="col-span-2">
+          <h2 className="text-xl font-bold mb-2">Key Phrase</h2>
+          <textarea
+            placeholder="Type Your Key Phrase Here & Click Submit"
+            className="textarea textarea-bordered textarea-lg w-full h-28"
+            value={keyPhrase}
+            onChange={handleKeyPhraseChange}
+          ></textarea>
+        </div>
 
-        <textarea
-          placeholder="Pre-Existing Content"
-          className="textarea textarea-bordered textarea-lg w-full h-28"
-          value={existingContent}
-          onChange={handleExistingContentChange}
-        ></textarea>
+        <div className="col-span-2">
+          <h2 className="text-xl font-bold mb-2">Pre-Existing Content</h2>
+          <textarea
+            placeholder="Pre-Existing Content"
+            className="textarea textarea-bordered textarea-lg w-full h-28"
+            value={existingContent}
+            onChange={handleExistingContentChange}
+          ></textarea>
+        </div>
 
-        <textarea
-          placeholder="Meta Description"
-          className="textarea textarea-bordered textarea-lg w-full h-24"
-          value={metaDescription}
-          readOnly
-        ></textarea>
+        <div className="col-span-2">
+          <h2 className="text-xl font-bold mb-2">Meta Description</h2>
+          <textarea
+            placeholder="Meta Description"
+            className="textarea textarea-bordered textarea-lg w-full h-24"
+            value={metaDescription}
+            readOnly
+          ></textarea>
+        </div>
 
-        <textarea
-          placeholder="Content"
-          className="textarea textarea-bordered textarea-lg w-full h-40"
-          value={content}
-          readOnly
-        ></textarea>
+        <div className="col-span-2">
+          <h2 className="text-xl font-bold mb-2">Content</h2>
+          <textarea
+            placeholder="Content"
+            className="textarea textarea-bordered textarea-lg w-full h-40"
+            value={content}
+            readOnly
+          ></textarea>
+        </div>
 
-        <textarea
-          placeholder="Images"
-          className="textarea textarea-bordered textarea-lg w-full h-40"
-          value={image}
-          readOnly
-        ></textarea>
+        <div className="col-span-2">
+          <h2 className="text-xl font-bold mb-2">Images</h2>
+          <textarea
+            placeholder="Images"
+            className="textarea textarea-bordered textarea-lg w-full h-40"
+            value={image}
+            readOnly
+          ></textarea>
+        </div>
       </div>
       <div className="flex justify-end w-full max-w-4xl ">
         <SubmitButton onSubmit={handleSubmit}></SubmitButton>
