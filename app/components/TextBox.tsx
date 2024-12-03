@@ -10,7 +10,7 @@ const TextBox = () => {
   const [existingContent, setExistingContent] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState("");
+  const [tags, setTags] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
 
@@ -41,11 +41,7 @@ const TextBox = () => {
         generatedData.metaDescription || "Meta description not available."
       );
       setContent(generatedData.content || "Content not available.");
-      setImage(
-        generatedData.imageIdeas
-          ? generatedData.imageIdeas.join("\n") // Format image ideas into a readable list
-          : "No image ideas available."
-      );
+      setTags(generatedData.tags || "No tags available.");
 
       setCurrentStep(5); // Move to the "Refine" step
     } catch (error) {
@@ -60,38 +56,50 @@ const TextBox = () => {
       <div className="w-full flex justify-center mb-5">
         <ProgressBar currentStep={currentStep}></ProgressBar>
       </div>
-      <div className="grid grid-cols-2 gap-4 w-full max-w-4xl">
-        <div className="col-span-2">
+      <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
+        {/* Row 1: Smaller Boxes */}
+        <div>
           <h2 className="text-xl font-bold mb-2">Key Phrase</h2>
           <textarea
-            placeholder="Type Your Key Phrase Here & Click Submit"
-            className="textarea textarea-bordered textarea-lg w-full h-28"
+            placeholder="Type Your Key Phrase Here"
+            className="textarea textarea-bordered textarea-sm w-full h-20"
             value={keyPhrase}
             onChange={handleKeyPhraseChange}
           ></textarea>
         </div>
 
-        <div className="col-span-2">
-          <h2 className="text-xl font-bold mb-2">Pre-Existing Content</h2>
-          <textarea
-            placeholder="Pre-Existing Content"
-            className="textarea textarea-bordered textarea-lg w-full h-28"
-            value={existingContent}
-            onChange={handleExistingContentChange}
-          ></textarea>
-        </div>
-
-        <div className="col-span-2">
+        <div>
           <h2 className="text-xl font-bold mb-2">Meta Description</h2>
           <textarea
             placeholder="Meta Description"
-            className="textarea textarea-bordered textarea-lg w-full h-24"
+            className="textarea textarea-bordered textarea-sm w-full h-20"
             value={metaDescription}
             readOnly
           ></textarea>
         </div>
 
-        <div className="col-span-2">
+        <div>
+          <h2 className="text-xl font-bold mb-2">Tags</h2>
+          <textarea
+            placeholder="Tags"
+            className="textarea textarea-bordered textarea-sm w-full h-20"
+            value={tags}
+            readOnly
+          ></textarea>
+        </div>
+
+        {/* Row 2: Larger Boxes */}
+        <div className="col-span-3">
+          <h2 className="text-xl font-bold mb-2">Pre-Existing Content</h2>
+          <textarea
+            placeholder="Pre-Existing Content"
+            className="textarea textarea-bordered textarea-lg w-full h-40"
+            value={existingContent}
+            onChange={handleExistingContentChange}
+          ></textarea>
+        </div>
+
+        <div className="col-span-3">
           <h2 className="text-xl font-bold mb-2">Content</h2>
           <textarea
             placeholder="Content"
@@ -100,18 +108,8 @@ const TextBox = () => {
             readOnly
           ></textarea>
         </div>
-
-        <div className="col-span-2">
-          <h2 className="text-xl font-bold mb-2">Images</h2>
-          <textarea
-            placeholder="Images"
-            className="textarea textarea-bordered textarea-lg w-full h-40"
-            value={image}
-            readOnly
-          ></textarea>
-        </div>
       </div>
-      <div className="flex justify-end w-full max-w-4xl ">
+      <div className="flex justify-end w-full max-w-4xl mt-4">
         <SubmitButton onSubmit={handleSubmit}></SubmitButton>
       </div>
     </div>
