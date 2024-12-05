@@ -10,16 +10,18 @@ const generateContent = async (keyPhrase: string) => {
   const prompt = `
   Key Phrase: ${keyPhrase}
 
-Generate the following based on the key phrase:
-- A meta description under 150 characters.
-- Blog content using active voice with the key phrase implemented 4-6 times.
-- 2 Image ideas.
+  Create an optimized blog post for SEO using the key phrase:
+  - it should be at least 300 words, include the key phrase 4-6 times, use active voice, and include h1 and h2 headers for improved readablitity.
+
+  Create a meta description under 150 characters that includes the key phrase.
+
+  Create 5 meta tags to improve SEO. 
 
 Respond strictly in valid JSON format like this:
 {
   "metaDescription": "Your meta description here under 100 characters",
-  "content": "Your blog content here under 50 words",
-  "imageIdeas": ["Image idea 1", "Image idea 2"]
+  "content": "Your blog content here",
+  "tags": "tag 1, tag 2, tag3, tag4, tag5"
 }
 `;
 

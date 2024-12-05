@@ -1,4 +1,5 @@
 "use client";
+import { ClipboardIcon } from "@heroicons/react/24/outline";
 
 import React, { useState } from "react";
 import ProgressBar from "./ProgressBar";
@@ -6,6 +7,12 @@ import { SubmitButton } from "./SubmitButton";
 import generateContent from "../server/generateContent";
 
 const TextBox = () => {
+  type CopyStatus = {
+    metaDescription?: string;
+    tags?: string;
+    content?: string;
+  };
+
   const [keyPhrase, setKeyPhrase] = useState("");
   const [existingContent, setExistingContent] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
@@ -14,6 +21,15 @@ const TextBox = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [currentPage, setCurrentPage] = useState(1); // Page tracking state
   const [loading, setLoading] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<CopyStatus>({});
+
+  const goToPage2ForTesting = () => {
+    // Mock data
+    setMetaDescription("This is a mock meta description for testing.");
+    setContent("This is mock content for testing purposes.");
+    setTags("test, mock, example");
+    setCurrentPage(2); // Navigate to Page 2
+  };
 
   const handleKeyPhraseChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -61,15 +77,37 @@ const TextBox = () => {
     if (currentPage < 2) setCurrentPage(currentPage + 1);
   };
 
+  const handleCopy = async (
+    text: string,
+    fieldName: "metaDescription" | "tags" | "content"
+  ) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyStatus((prev) => ({ ...prev, [fieldName]: "Copied!" }));
+      setTimeout(() => {
+        setCopyStatus((prev) => ({ ...prev, [fieldName]: "Copy" }));
+      }, 2000); // Reset the status after 2 seconds
+    } catch (error) {
+      console.error("Failed to copy text:", error);
+      setCopyStatus((prev) => ({ ...prev, [fieldName]: "Failed" }));
+    }
+  };
+
   return (
     <div className="w-full">
+      <button
+        className="btn btn-outline btn-sm mb-4"
+        onClick={goToPage2ForTesting}
+      >
+        Go to Page 2 (Mock Data)
+      </button>
       {/* Progress Bar at the Top */}
       <div className="flex justify-center items-center mb-5 w-full">
         <div className="max-w-4xl w-full px-4">
           <ProgressBar currentStep={currentStep}></ProgressBar>
         </div>
       </div>
-  
+
       {/* Main Content */}
       <div className="join grid grid-cols-1 justify-items-center">
         {currentPage === 1 && (
@@ -84,7 +122,7 @@ const TextBox = () => {
                 onChange={handleKeyPhraseChange}
               ></textarea>
             </div>
-  
+
             <div className="col-span-3">
               <h2 className="text-xl font-bold mb-2">Pre-Existing Content</h2>
               <textarea
@@ -96,7 +134,7 @@ const TextBox = () => {
             </div>
           </div>
         )}
-  
+
         {currentPage === 2 && (
           <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
             {/* Page 2: Generated Meta Description, Content, and Tags */}
@@ -108,8 +146,15 @@ const TextBox = () => {
                 value={metaDescription}
                 readOnly
               ></textarea>
+              <button
+                className="absolute bottom-2 right-2 btn btn-sm btn-circle btn-outline"
+                onClick={() => handleCopy(metaDescription, "metaDescription")}
+                title={copyStatus.metaDescription || "Copy"}
+              >
+                <ClipboardIcon className="h-5 w-5" />
+              </button>
             </div>
-  
+
             <div>
               <h2 className="text-xl font-bold mb-2">Tags</h2>
               <textarea
@@ -118,8 +163,15 @@ const TextBox = () => {
                 value={tags}
                 readOnly
               ></textarea>
+              <button
+                className="absolute bottom-2 right-2 btn btn-sm btn-circle btn-outline"
+                onClick={() => handleCopy(tags, "tags")}
+                title={copyStatus.tags || "Copy"}
+              >
+                <ClipboardIcon className="h-5 w-5" />
+              </button>
             </div>
-  
+
             <div className="col-span-3">
               <h2 className="text-xl font-bold mb-2">Content</h2>
               <textarea
@@ -128,14 +180,24 @@ const TextBox = () => {
                 value={content}
                 readOnly
               ></textarea>
+              <button
+                className="absolute bottom-2 right-2 btn btn-sm btn-circle btn-outline"
+                onClick={() => handleCopy(content, "content")}
+                title={copyStatus.content || "Copy"}
+              >
+                <ClipboardIcon className="h-5 w-5" />
+              </button>
             </div>
           </div>
         )}
-  
+
         {/* Pagination Buttons */}
         <div className="flex justify-between w-full max-w-4xl mt-4">
           {currentPage > 1 && (
-            <button className="btn btn-accent btn-lg px-8 py-4 text-lg rounded-lg" onClick={goToPreviousPage}>
+            <button
+              className="btn btn-accent btn-lg px-8 py-4 text-lg rounded-lg"
+              onClick={goToPreviousPage}
+            >
               Previous Page
             </button>
           )}
@@ -146,7 +208,6 @@ const TextBox = () => {
       </div>
     </div>
   );
-  
 };
 
 export default TextBox;
