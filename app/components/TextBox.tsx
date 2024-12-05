@@ -135,19 +135,13 @@ const TextBox = () => {
         {/* Pagination Buttons */}
         <div className="flex justify-between w-full max-w-4xl mt-4">
           {currentPage > 1 && (
-            <button className="join-item btn btn-outline" onClick={goToPreviousPage}>
+            <button className="btn btn-accent btn-lg px-8 py-4 text-lg rounded-lg" onClick={goToPreviousPage}>
               Previous Page
             </button>
           )}
           {currentPage < 2 && (
-            <button className="join-item btn btn-outline" onClick={goToNextPage}>
-              Next Page
-            </button>
-          
+            <SubmitButton onSubmit={handleSubmit}></SubmitButton>
           )}
-          <div className="flex justify-end w-full max-w-4xl mt-4">
-              <SubmitButton onSubmit={handleSubmit}></SubmitButton>
-          </div>
         </div>
       </div>
     </div>
