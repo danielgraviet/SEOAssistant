@@ -12,6 +12,7 @@ const TextBox = () => {
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1); // Page tracking state
   const [loading, setLoading] = useState(false);
 
   const handleKeyPhraseChange = (
@@ -44,6 +45,7 @@ const TextBox = () => {
       setTags(generatedData.tags || "No tags available.");
 
       setCurrentStep(5); // Move to the "Refine" step
+      setCurrentPage(2); // Automatically go to the second page
     } catch (error) {
       console.error("Error generating content:", error);
     } finally {
@@ -51,69 +53,106 @@ const TextBox = () => {
     }
   };
 
+  const goToPreviousPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < 2) setCurrentPage(currentPage + 1);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
-      <div className="w-full flex justify-center mb-5">
-        <ProgressBar currentStep={currentStep}></ProgressBar>
-      </div>
-      <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
-        {/* Row 1: Smaller Boxes */}
-        <div>
-          <h2 className="text-xl font-bold mb-2">Key Phrase</h2>
-          <textarea
-            placeholder="Type Your Key Phrase Here"
-            className="textarea textarea-bordered textarea-sm w-full h-20"
-            value={keyPhrase}
-            onChange={handleKeyPhraseChange}
-          ></textarea>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-bold mb-2">Meta Description</h2>
-          <textarea
-            placeholder="Meta Description"
-            className="textarea textarea-bordered textarea-sm w-full h-20"
-            value={metaDescription}
-            readOnly
-          ></textarea>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-bold mb-2">Tags</h2>
-          <textarea
-            placeholder="Tags"
-            className="textarea textarea-bordered textarea-sm w-full h-20"
-            value={tags}
-            readOnly
-          ></textarea>
-        </div>
-
-        {/* Row 2: Larger Boxes */}
-        <div className="col-span-3">
-          <h2 className="text-xl font-bold mb-2">Pre-Existing Content</h2>
-          <textarea
-            placeholder="Pre-Existing Content"
-            className="textarea textarea-bordered textarea-lg w-full h-40"
-            value={existingContent}
-            onChange={handleExistingContentChange}
-          ></textarea>
-        </div>
-
-        <div className="col-span-3">
-          <h2 className="text-xl font-bold mb-2">Content</h2>
-          <textarea
-            placeholder="Content"
-            className="textarea textarea-bordered textarea-lg w-full h-40"
-            value={content}
-            readOnly
-          ></textarea>
+    <div className="w-full">
+      {/* Progress Bar at the Top */}
+      <div className="flex justify-center items-center mb-5 w-full">
+        <div className="max-w-4xl w-full px-4">
+          <ProgressBar currentStep={currentStep}></ProgressBar>
         </div>
       </div>
-      <div className="flex justify-end w-full max-w-4xl mt-4">
-        <SubmitButton onSubmit={handleSubmit}></SubmitButton>
+  
+      {/* Main Content */}
+      <div className="join grid grid-cols-1 justify-items-center">
+        {currentPage === 1 && (
+          <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
+            {/* Page 1: Key Phrase and Pre-Existing Content */}
+            <div>
+              <h2 className="text-xl font-bold mb-2">Key Phrase</h2>
+              <textarea
+                placeholder="Type Your Key Phrase Here"
+                className="textarea textarea-bordered textarea-sm w-full h-20"
+                value={keyPhrase}
+                onChange={handleKeyPhraseChange}
+              ></textarea>
+            </div>
+  
+            <div className="col-span-3">
+              <h2 className="text-xl font-bold mb-2">Pre-Existing Content</h2>
+              <textarea
+                placeholder="Pre-Existing Content"
+                className="textarea textarea-bordered textarea-lg w-full h-40"
+                value={existingContent}
+                onChange={handleExistingContentChange}
+              ></textarea>
+            </div>
+          </div>
+        )}
+  
+        {currentPage === 2 && (
+          <div className="grid grid-cols-3 gap-4 w-full max-w-4xl">
+            {/* Page 2: Generated Meta Description, Content, and Tags */}
+            <div>
+              <h2 className="text-xl font-bold mb-2">Meta Description</h2>
+              <textarea
+                placeholder="Meta Description"
+                className="textarea textarea-bordered textarea-sm w-full h-20"
+                value={metaDescription}
+                readOnly
+              ></textarea>
+            </div>
+  
+            <div>
+              <h2 className="text-xl font-bold mb-2">Tags</h2>
+              <textarea
+                placeholder="Tags"
+                className="textarea textarea-bordered textarea-sm w-full h-20"
+                value={tags}
+                readOnly
+              ></textarea>
+            </div>
+  
+            <div className="col-span-3">
+              <h2 className="text-xl font-bold mb-2">Content</h2>
+              <textarea
+                placeholder="Content"
+                className="textarea textarea-bordered textarea-lg w-full h-40"
+                value={content}
+                readOnly
+              ></textarea>
+            </div>
+          </div>
+        )}
+  
+        {/* Pagination Buttons */}
+        <div className="flex justify-between w-full max-w-4xl mt-4">
+          {currentPage > 1 && (
+            <button className="join-item btn btn-outline" onClick={goToPreviousPage}>
+              Previous Page
+            </button>
+          )}
+          {currentPage < 2 && (
+            <button className="join-item btn btn-outline" onClick={goToNextPage}>
+              Next Page
+            </button>
+          
+          )}
+          <div className="flex justify-end w-full max-w-4xl mt-4">
+              <SubmitButton onSubmit={handleSubmit}></SubmitButton>
+          </div>
+        </div>
       </div>
     </div>
   );
+  
 };
 
 export default TextBox;
