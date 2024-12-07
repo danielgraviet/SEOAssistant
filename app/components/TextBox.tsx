@@ -20,7 +20,7 @@ const TextBox = () => {
   const [tags, setTags] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
   const [currentPage, setCurrentPage] = useState(1); // Page tracking state
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
   const [copyStatus, setCopyStatus] = useState<CopyStatus>({});
 
   const goToPage2ForTesting = () => {
