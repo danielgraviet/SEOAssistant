@@ -54,7 +54,7 @@ const NavBar = () => {
           > {isLoggedIn ? (
             <>
               <li>
-                <a className="justify-between">Profile</a>
+                <Link href='./profile'>Profile</Link>
               </li>
               <li>
                 <Link href='./settings'>Settings</Link>
