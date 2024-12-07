@@ -1,8 +1,10 @@
 'use client'
+import Link from "next/link";
 import React, { useState } from "react";
 
 const NavBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [settings, openSettings] = useState(false);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -13,6 +15,11 @@ const NavBar = () => {
     setIsLoggedIn(false);
     console.log("User logged out!");
   };
+
+  const handleSettings = () => {
+    openSettings(true)
+    console.log("Opened Settings")
+  }
 
   return (
     <div className="navbar bg-base-100">
@@ -50,7 +57,7 @@ const NavBar = () => {
                 <a className="justify-between">Profile</a>
               </li>
               <li>
-                <a>Settings</a>
+                <Link href='./settings'>Settings</Link>
               </li>
               <li>
                 <a onClick={handleLogout}>Logout</a>
