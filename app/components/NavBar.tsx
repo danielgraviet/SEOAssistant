@@ -4,8 +4,7 @@ import React, { useState } from "react";
 
 const NavBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [settings, openSettings] = useState(false);
-
+  
   const handleLogin = () => {
     setIsLoggedIn(true);
     console.log("User logged in!");
@@ -15,11 +14,6 @@ const NavBar = () => {
     setIsLoggedIn(false);
     console.log("User logged out!");
   };
-
-  const handleSettings = () => {
-    openSettings(true)
-    console.log("Opened Settings")
-  }
 
   return (
     <div className="navbar bg-base-100">
