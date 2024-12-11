@@ -46,9 +46,18 @@ const TextBox = () => {
     setExistingContent(event.target.value);
   };
 
+  const logContent = () => {
+    console.log(existingContent);
+    console.log(keyPhrase);
+  }
+
   const handleSubmit = async () => {
     try {
       setLoading(true);
+
+      console.log("Key Phrase: ", keyPhrase)
+      console.log("Pre-Existing Content: ", existingContent)
+
 
       // Call the generateContent function to get API response
       const generatedData = await generateContent(keyPhrase);
@@ -131,6 +140,7 @@ const TextBox = () => {
                 value={existingContent}
                 onChange={handleExistingContentChange}
               ></textarea>
+              <button className="btn btn-error" onClick={logContent}>Log Content</button>
             </div>
           </div>
         )}
