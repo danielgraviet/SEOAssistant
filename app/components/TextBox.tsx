@@ -147,7 +147,7 @@ const TextBox = () => {
                 readOnly
               ></textarea>
               <button
-                className="absolute bottom-2 right-2 btn btn-sm btn-circle btn-outline"
+                className="bottom-2 right-2 w-full btn btn-sm btn-circle btn-outline"
                 onClick={() => handleCopy(metaDescription, "metaDescription")}
                 title={copyStatus.metaDescription || "Copy"}
               >
@@ -164,7 +164,7 @@ const TextBox = () => {
                 readOnly
               ></textarea>
               <button
-                className="absolute bottom-2 right-2 btn btn-sm btn-circle btn-outline"
+                className="bottom-2 right-2 w-full btn btn-sm btn-circle btn-outline"
                 onClick={() => handleCopy(tags, "tags")}
                 title={copyStatus.tags || "Copy"}
               >
@@ -181,7 +181,7 @@ const TextBox = () => {
                 readOnly
               ></textarea>
               <button
-                className="absolute bottom-2 right-2 btn btn-sm btn-circle btn-outline"
+                className="bottom-2 right-2 w-full btn btn-sm btn-circle btn-outline"
                 onClick={() => handleCopy(content, "content")}
                 title={copyStatus.content || "Copy"}
               >
