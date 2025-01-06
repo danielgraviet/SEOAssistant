@@ -62,7 +62,7 @@ const TextBox = () => {
 
 
       // Call the generateContent function to get API response
-      const generatedData = await generateContent(keyPhrase);
+      const generatedData = await generateContent(keyPhrase, existingContent);
 
       // Populate the text boxes with API response data
       setMetaDescription(

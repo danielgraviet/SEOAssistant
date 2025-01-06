@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const generateContent = async (keyPhrase: string) => {
+const generateContent = async (keyPhrase: string, existingContent: string) => {
   const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 
   if (!apiKey) {
@@ -8,21 +8,20 @@ const generateContent = async (keyPhrase: string) => {
   }
 
   const prompt = `
-  Key Phrase: ${keyPhrase}
+  Existing Content: ${existingContent}
+  Using this Key Phrase: ${keyPhrase}, optimize this blog post for SEO.
+  Include the key phrase in the first paragraph, and add transition words, H1 and H2 headers.
+  Make the content easy to read, include tips and actionable items. Keep sentence length under 20 words.
+  The final blog post should be around 500 words long. 
+  Also create a meta description under 150 characters that includes the key phrase at the beginning.
+  Finally Create 5 meta tags to improve SEO. 
 
-  Create an optimized blog post for SEO using the key phrase:
-  - it should be at least 300 words, include the key phrase 4-6 times, use active voice, and include h1 and h2 headers for improved readablitity.
-
-  Create a meta description under 150 characters that includes the key phrase.
-
-  Create 5 meta tags to improve SEO. 
-
-Respond strictly in valid JSON format like this:
-{
-  "metaDescription": "Your meta description here under 100 characters",
-  "content": "Your blog content here",
-  "tags": "tag 1, tag 2, tag3, tag4, tag5"
-}
+  Respond strictly in valid JSON format like this:
+  {
+    "metaDescription": "Your meta description here under 100 characters",
+    "content": "Your blog content here",
+    "tags": "tag 1, tag 2, tag3, tag4, tag5"
+  }
 `;
 
   try {
