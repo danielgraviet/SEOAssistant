@@ -2,7 +2,6 @@
 import { ClipboardIcon } from "@heroicons/react/24/outline";
 
 import React, { useState } from "react";
-import ProgressBar from "./ProgressBar";
 import { SubmitButton } from "./SubmitButton";
 import generateContent from "../server/generateContent";
 
@@ -10,12 +9,14 @@ const TextBox = () => {
   type CopyStatus = {
     metaDescription?: string;
     tags?: string;
+    slug?: string;
     content?: string;
   };
 
   const [keyPhrase, setKeyPhrase] = useState("");
   const [existingContent, setExistingContent] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
+  const [slug, setSlug] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
@@ -28,6 +29,7 @@ const TextBox = () => {
     setMetaDescription("This is a mock meta description for testing.");
     setContent("This is mock content for testing purposes.");
     setTags("test, mock, example");
+    setSlug("testing-slug-example")
     setCurrentPage(2); // Navigate to Page 2
   };
 
@@ -68,6 +70,8 @@ const TextBox = () => {
       );
       setContent(generatedData.content || "Content not available.");
       setTags(generatedData.tags || "No tags available.");
+      setTags(generatedData.slug || "Slug not available.");
+
 
       setCurrentStep(5); // Move to the "Refine" step
       setCurrentPage(2); // Automatically go to the second page
@@ -88,7 +92,7 @@ const TextBox = () => {
 
   const handleCopy = async (
     text: string,
-    fieldName: "metaDescription" | "tags" | "content"
+    fieldName: "metaDescription" | "tags" | "slug" | "content"
   ) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -110,13 +114,7 @@ const TextBox = () => {
       >
         Go to Page 2 (Mock Data)
       </button>
-      {/* Progress Bar at the Top */}
-      <div className="flex justify-center items-center mb-5 w-full">
-        <div className="max-w-4xl w-full px-4">
-          <ProgressBar currentStep={currentStep}></ProgressBar>
-        </div>
-      </div>
-
+      
       {/* Main Content */}
       <div className="join grid grid-cols-1 justify-items-center">
         {currentPage === 1 && (
@@ -136,11 +134,10 @@ const TextBox = () => {
               <h2 className="text-xl font-bold mb-2">Pre-Existing Content</h2>
               <textarea
                 placeholder="Pre-Existing Content"
-                className="textarea textarea-bordered textarea-lg w-full h-40"
+                className="textarea textarea-bordered textarea-lg w-full h-[30rem] md:h-[30rem]"
                 value={existingContent}
                 onChange={handleExistingContentChange}
               ></textarea>
-              <button className="btn btn-error" onClick={logContent}>Log Content</button>
             </div>
           </div>
         )}
@@ -182,11 +179,28 @@ const TextBox = () => {
               </button>
             </div>
 
+            <div>
+              <h2 className="text-xl font-bold mb-2">Slug</h2>
+              <textarea
+                placeholder="Slug"
+                className="textarea textarea-bordered textarea-sm w-full h-20"
+                value={slug}
+                readOnly
+              ></textarea>
+              <button
+                className="bottom-2 right-2 w-full btn btn-sm btn-circle btn-outline"
+                onClick={() => handleCopy(slug, "slug")}
+                title={copyStatus.slug || "Copy"}
+              >
+                <ClipboardIcon className="h-5 w-5" />
+              </button>
+            </div>
+
             <div className="col-span-3">
               <h2 className="text-xl font-bold mb-2">Content</h2>
               <textarea
                 placeholder="Content"
-                className="textarea textarea-bordered textarea-lg w-full h-40"
+                className="textarea textarea-bordered textarea-lg w-full h-[25rem] md:h-[25rem]"
                 value={content}
                 readOnly
               ></textarea>
