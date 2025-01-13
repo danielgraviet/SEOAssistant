@@ -4,6 +4,7 @@ import { ClipboardIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { SubmitButton } from "./SubmitButton";
 import generateContent from "../server/generateContent";
+import ReactMarkdown from "react-markdown"
 
 const TextBox = () => {
   type CopyStatus = {
@@ -198,12 +199,9 @@ const TextBox = () => {
 
             <div className="col-span-3">
               <h2 className="text-xl font-bold mb-2">Content</h2>
-              <textarea
-                placeholder="Content"
-                className="textarea textarea-bordered textarea-lg w-full h-[25rem] md:h-[25rem]"
-                value={content}
-                readOnly
-              ></textarea>
+                <div className="prose border p-4 rounded bg-gray-50">
+                  <ReactMarkdown>{content}</ReactMarkdown>
+                </div>
               <button
                 className="bottom-2 right-2 w-full btn btn-sm btn-circle btn-outline"
                 onClick={() => handleCopy(content, "content")}

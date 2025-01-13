@@ -8,21 +8,27 @@ const generateContent = async (keyPhrase: string, existingContent: string) => {
   }
 
   const prompt = `
-  Existing Content: ${existingContent}
-  Using this Key Phrase: ${keyPhrase}, optimize this blog post for SEO.
-  Include the key phrase in the first paragraph, and add transition words, H1 and H2 headers.
-  Make the content easy to read, include tips and actionable items. Keep sentence length under 20 words.
-  The final blog post should be around 500 words long. 
-  Also create a meta description under 150 characters that includes the key phrase at the beginning.
-  Finally Create 5 meta tags to improve SEO. 
+Existing Content: ${existingContent}
+Using this Key Phrase: ${keyPhrase}, optimize this blog post for SEO.
 
-  Respond strictly in valid JSON format like this:
-  {
-    "metaDescription": "Your meta description here under 100 characters",
-    "content": "Your blog content here",
-    "tags": "tag 1, tag 2, tag3, tag4, tag5"
-  }
+- Format the blog content in **Markdown**:
+  - Use # for H1 headings, ## for H2 headings, and ### for H3 headings.
+  - Add line breaks between headings, paragraphs, and lists.
+- Include the key phrase in the first paragraph and throughout the content where appropriate.
+- Add transition words, tips, and actionable items to make the content engaging and easy to read.
+- Keep sentence length under 20 words, and the overall content length around 500 words.
+- Create a meta description under 150 characters with the key phrase at the beginning.
+- Provide 5 meta tags to improve SEO.
+
+Respond strictly in valid JSON format like this:
+{
+  "metaDescription": "Your meta description here under 150 characters",
+  "content": "Your blog content here in proper Markdown format",
+  "tags": "tag1, tag2, tag3, tag4, tag5"
+}
 `;
+
+
 
   try {
     const response = await axios.post(
